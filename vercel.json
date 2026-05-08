@@ -7,6 +7,14 @@
     {
       "source": "/api/:path*",
       "destination": "https://sszip--ioqvhes.replit.app/api/:path*"
-    }
+    },
+    { "source": "/dashboard", "destination": "/dashboard.html" },
+    { "source": "/top",       "destination": "/top.html" },
+    { "source": "/report",    "destination": "/report.html" },
+    { "source": "/commands",  "destination": "/commands.html" },
+    { "source": "/features",  "destination": "/features.html" },
+    { "source": "/login",     "destination": "/login.html" },
+    { "source": "/premium",   "destination": "/premium.html" },
+    { "source": "/owner",     "destination": "/owner.html" }
   ]
 }
