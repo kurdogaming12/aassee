@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/auth/:path*",
+      "destination": "https://sszip--ioqvhes.replit.app/auth/:path*"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "https://sszip--ioqvhes.replit.app/api/:path*"
+    }
+  ]
+}
