@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WoW Bot — Owner Panel</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    <a href="/" class="nav-logo">
+      <img src="/avatar.png" class="nav-avatar-sm" alt="WoW" />
+      <span>WoW</span>
+    </a>
+    <div class="nav-right" id="nav-right"></div>
+    <div class="nav-links" id="nav-links">
+      <a href="/" data-page="home">🏠 Home</a>
+      <a href="/top" data-page="top">🏆 Top</a>
+      <a href="/report" data-page="report">📋 Report</a>
+      <a href="/dashboard" data-page="dashboard">👤 Dashboard</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+
+  <div id="op-loading" class="op-loading">
+    <div class="op-loading-text">⏳ Checking access...</div>
+  </div>
+
+  <div id="op-denied" class="op-denied" style="display:none">
+    <div class="op-denied-icon">🔒</div>
+    <h1>Access Denied</h1>
+    <p id="op-denied-msg">This page is restricted to bot owners only.</p>
+    <a href="/" class="btn primary" style="margin-top:24px">← Back to Home</a>
+  </div>
+
+  <div id="op-panel" style="display:none">
+    <div class="page-header">
+      <h1>👑 Owner Panel</h1>
+      <p>Bot management — Owner only</p>
+    </div>
+
+    <div class="op-wrap">
+      <div class="op-tabs">
+        <button class="op-tab active" data-tab="admins">👑 Admins</button>
+        <button class="op-tab" data-tab="banned">🚫 Banned</button>
+        <button class="op-tab" data-tab="money">💰 Money</button>
+        <button class="op-tab" data-tab="categories">📋 Categories</button>
+        <button class="op-tab" data-tab="servers">🌐 Servers</button>
+        <button class="op-tab" data-tab="settings">⚙️ Settings</button>
+        <button class="op-tab" data-tab="reset">🔄 Reset</button>
+      </div>
+
+      <!-- ── ADMINS ─────────────────────────────────── -->
+      <div id="sec-admins" class="op-section active">
+        <div class="op-card">
+          <h2>➕ Add Admin</h2>
+          <div class="op-add-form">
+            <div class="op-autocomplete-wrap">
+              <input type="text" id="add-admin-search" placeholder="Name or User ID..." class="op-input" autocomplete="off" />
+              <ul id="admin-search-dropdown" class="op-autocomplete-list" style="display:none"></ul>
+            </div>
+            <div id="add-admin-preview" class="op-user-preview" style="display:none"></div>
+            <div class="op-perms-grid">
+              <label class="op-perm-check"><input type="checkbox" id="perm-full" /> 🔓 Full Permission</label>
+              <label class="op-perm-check"><input type="checkbox" id="perm-economy" /> 💰 Economy</label>
+              <label class="op-perm-check"><input type="checkbox" id="perm-moderation" /> 🔨 Moderation</label>
+              <label class="op-perm-check"><input type="checkbox" id="perm-giveaway" /> 🎉 Giveaway</label>
+            </div>
+            <button onclick="addAdmin()" class="op-btn op-btn-success" style="width:100%">✅ Add as Admin</button>
+          </div>
+        </div>
+        <div class="op-card">
+          <h2>👑 Current Admins</h2>
+          <div id="admins-list" class="op-user-list"><div class="op-empty">Loading...</div></div>
+        </div>
+      </div>
+
+      <!-- ── BANNED ─────────────────────────────────── -->
+      <div id="sec-banned" class="op-section">
+        <div class="op-card">
+          <h2>🚫 Ban User</h2>
+          <div class="op-add-form">
+            <div class="op-autocomplete-wrap">
+              <input type="text" id="ban-user-search" placeholder="Name or User ID..." class="op-input" autocomplete="off" />
+              <ul id="ban-search-dropdown" class="op-autocomplete-list" style="display:none"></ul>
+            </div>
+            <div id="ban-user-preview" class="op-user-preview" style="display:none"></div>
+            <input type="text" id="ban-reason" placeholder="Reason (optional)" class="op-input" style="width:100%" />
+            <button onclick="banUser()" class="op-btn op-btn-danger" style="width:100%">🚫 Ban User</button>
+          </div>
+        </div>
+        <div class="op-card">
+          <h2>🚫 Banned Users</h2>
+          <div id="banned-list" class="op-user-list"><div class="op-empty">Loading...</div></div>
+        </div>
+      </div>
+
+      <!-- ── MONEY ──────────────────────────────────── -->
+      <div id="sec-money" class="op-section">
+        <div class="op-card">
+          <h2>💰 Give / Take Coins</h2>
+          <div class="op-add-form">
+            <div class="op-autocomplete-wrap">
+              <input type="text" id="money-user-search" placeholder="Name or User ID..." class="op-input" autocomplete="off" />
+              <ul id="money-search-dropdown" class="op-autocomplete-list" style="display:none"></ul>
+            </div>
+            <div id="money-user-preview" class="op-user-preview" style="display:none"></div>
+            <div class="op-row">
+              <input type="number" id="money-amount" placeholder="Amount" class="op-input" min="1" />
+              <button onclick="giveMoney()" class="op-btn op-btn-success">+ Give</button>
+              <button onclick="takeMoney()" class="op-btn op-btn-danger">− Take</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── CATEGORIES ─────────────────────────────── -->
+      <div id="sec-categories" class="op-section">
+        <div class="op-card">
+          <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:4px">
+            <div>
+              <h2 style="margin:0">📋 Recurring Categories</h2>
+              <p class="op-hint" style="margin:4px 0 0">Automatically distribute coins to selected users on a schedule. They receive a DM notification.</p>
+            </div>
+            <button onclick="openCategoryModal()" class="op-btn op-btn-success">➕ New Category</button>
+          </div>
+          <div id="cat-list" class="op-user-list" style="margin-top:16px">
+            <div class="op-empty">Loading...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── SERVERS ────────────────────────────────── -->
+      <div id="sec-servers" class="op-section">
+        <div class="op-card">
+          <h2>🌐 Bot Servers</h2>
+          <div id="servers-list" class="op-server-list"><div class="op-empty">Loading...</div></div>
+        </div>
+      </div>
+
+      <!-- ── SETTINGS ───────────────────────────────── -->
+      <div id="sec-settings" class="op-section">
+        <div class="op-card">
+          <h2>🔗 Invite Link</h2>
+          <p class="op-hint">This invite link is displayed on the homepage. Save to update it.</p>
+          <div class="op-add-form">
+            <input type="text" id="invite-link-input" placeholder="https://discord.com/oauth2/authorize?..." class="op-input" style="width:100%" />
+            <button onclick="saveInviteLink()" class="op-btn op-btn-success" style="width:100%">💾 Save Invite Link</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── RESET ──────────────────────────────────── -->
+      <div id="sec-reset" class="op-section">
+        <div class="op-card">
+          <h2>🔄 Reset Leaderboard</h2>
+          <p class="op-hint">Sets XP, Coins and Command-Count to 0 for all users.<br>Daily streaks and inventory are <strong>not</strong> affected.</p>
+          <button onclick="resetLeaderboard()" class="op-btn op-btn-warning" style="width:100%;margin-top:8px">🔄 Reset All Leaderboard Stats</button>
+        </div>
+        <div class="op-card op-danger-card">
+          <h2>⚠️ Reset ALL User Data</h2>
+          <p class="op-hint">Permanently deletes <strong>all</strong> user records — balance, XP, streaks, inventory.<br>This <strong>cannot be undone!</strong></p>
+          <button onclick="resetAll()" class="op-btn op-btn-danger" style="width:100%;margin-top:8px">⚠️ Delete ALL User Data</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── CATEGORY MODAL ─────────────────────────────────────── -->
+<div id="cat-modal" class="cat-modal-overlay" style="display:none" onclick="catModalBgClick(event)">
+  <div class="cat-modal-box">
+    <div class="cat-modal-header">
+      <h2 style="margin:0;font-size:1.15rem" id="cat-modal-title">➕ New Category</h2>
+      <button onclick="closeCategoryModal()" class="op-btn op-btn-secondary op-btn-sm">✕ Close</button>
+    </div>
+    <div class="cat-modal-body">
+
+      <label class="cat-label">Category Name</label>
+      <input type="text" id="cat-name" placeholder="e.g. Weekly Salary" class="op-input" style="width:100%" />
+
+      <label class="cat-label">Price per Person (coins)</label>
+      <input type="number" id="cat-price" placeholder="e.g. 5000" class="op-input" min="1" style="width:100%" />
+
+      <label class="cat-label">Payment Interval</label>
+      <div class="op-row">
+        <input type="number" id="cat-interval-value" value="1" min="1" class="op-input" style="width:90px;flex-shrink:0" />
+        <select id="cat-interval-unit" class="op-input" onchange="updateDaySelector()" style="flex:1">
+          <option value="d">Day(s)  — d</option>
+          <option value="h">Hour(s) — h</option>
+          <option value="m">Minute(s) — m</option>
+          <option value="mo">Month(s) — mo</option>
+          <option value="w" selected>Week(s) — w</option>
+        </select>
+      </div>
+
+      <label class="cat-label">Payment Hour (00:00 – 23:00)</label>
+      <select id="cat-hour" class="op-input" style="width:100%"></select>
+
+      <div id="cat-day-section">
+        <label class="cat-label">Day of Week</label>
+        <div class="cat-days-grid">
+          <button type="button" class="cat-day-btn" data-day="1" onclick="setCatDay(this)">Mon</button>
+          <button type="button" class="cat-day-btn" data-day="2" onclick="setCatDay(this)">Tue</button>
+          <button type="button" class="cat-day-btn" data-day="3" onclick="setCatDay(this)">Wed</button>
+          <button type="button" class="cat-day-btn" data-day="4" onclick="setCatDay(this)">Thu</button>
+          <button type="button" class="cat-day-btn" data-day="5" onclick="setCatDay(this)">Fri</button>
+          <button type="button" class="cat-day-btn" data-day="6" onclick="setCatDay(this)">Sat</button>
+          <button type="button" class="cat-day-btn" data-day="0" onclick="setCatDay(this)">Sun</button>
+          <button type="button" class="cat-day-btn cat-day-today" data-day="-1" onclick="setCatDay(this)">📅 Today</button>
+        </div>
+        <label class="op-perm-check" style="margin-top:10px">
+          <input type="checkbox" id="cat-start-today" />
+          Start first payment today (if the hour hasn't passed yet)
+        </label>
+      </div>
+
+      <label class="cat-label">Members (receive coins each time)</label>
+      <div class="op-autocomplete-wrap">
+        <input type="text" id="cat-member-search" placeholder="Search by name or User ID..." class="op-input" autocomplete="off" style="width:100%" />
+        <ul id="cat-member-dropdown" class="op-autocomplete-list" style="display:none"></ul>
+      </div>
+      <div id="cat-members-list" class="cat-members-list">
+        <div class="op-empty" style="padding:10px 0">No members added yet.</div>
+      </div>
+
+      <div class="op-row" style="margin-top:20px;gap:10px">
+        <button id="cat-submit-btn" onclick="saveCategory()" class="op-btn op-btn-success" style="flex:1">✅ Create Category</button>
+        <button onclick="closeCategoryModal()" class="op-btn op-btn-secondary" style="flex:1">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <img src="/avatar.png" class="footer-avatar" alt="WoW" />
+    <p>WoW Bot &copy; 2025 — Prefix: <code>wow</code></p>
+  </div>
+</footer>
+
+<script src="/js/config.js"></script>
+<script src="/js/nav.js"></script>
+<script src="/js/owner.js"></script>
+</body>
+</html>

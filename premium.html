@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WoW Bot — Premium</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    <a href="/" class="nav-logo">
+      <img src="/avatar.png" class="nav-avatar-sm" alt="WoW" />
+      <span>WoW</span>
+    </a>
+    <div class="nav-right" id="nav-right"></div>
+    <div class="nav-links" id="nav-links">
+      <a href="/" data-page="home">🏠 Home</a>
+      <a href="/top" data-page="top">🏆 Top</a>
+      <a href="/report" data-page="report">📋 Report</a>
+      <a href="/dashboard" data-page="dashboard">👤 Dashboard</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="premium-hero">
+    <div class="premium-hero-content">
+      <div class="premium-badge">✨ EXCLUSIVE</div>
+      <h1 class="premium-title">WoW Bot <span class="premium-gradient">Premium</span></h1>
+      <p class="premium-subtitle">Boost your economy experience with exclusive VIP perks.<br>Pay with your in-game coins — no real money needed.</p>
+      <div class="premium-note">🔁 Subscriptions are monthly and auto-renew from your in-game balance.</div>
+    </div>
+  </div>
+
+  <div class="premium-cards-row">
+
+    <div class="premium-card vip1">
+      <div class="vip-badge vip1-badge">⭐ VIP 1</div>
+      <div class="vip-price">5,000,000 <span class="vip-currency">coins/month</span></div>
+      <ul class="vip-perks">
+        <li>💰 Daily reward <strong>×1.5</strong></li>
+        <li>🎰 Gambling win chance <strong>+20%</strong></li>
+        <li>🌿 Hunt rare chance <strong>+20%</strong></li>
+        <li>⭐ VIP 1 role in server</li>
+      </ul>
+      <button class="vip-btn vip1-btn" onclick="buyVip(1)">Get VIP 1</button>
+    </div>
+
+    <div class="premium-card vip2 vip-popular">
+      <div class="vip-popular-tag">MOST POPULAR</div>
+      <div class="vip-badge vip2-badge">💎 VIP 2</div>
+      <div class="vip-price">15,000,000 <span class="vip-currency">coins/month</span></div>
+      <ul class="vip-perks">
+        <li>💰 Daily reward <strong>×2</strong></li>
+        <li>🎰 Gambling win chance <strong>+20%</strong></li>
+        <li>🌿 Hunt rare chance <strong>+50%</strong></li>
+        <li>💎 VIP 2 role in server</li>
+      </ul>
+      <button class="vip-btn vip2-btn" onclick="buyVip(2)">Get VIP 2</button>
+    </div>
+
+    <div class="premium-card vip3">
+      <div class="vip-badge vip3-badge">👑 VIP 3</div>
+      <div class="vip-price">30,000,000 <span class="vip-currency">coins/month</span></div>
+      <ul class="vip-perks">
+        <li>💰 Daily reward <strong>×2.5</strong></li>
+        <li>🎰 Gambling win chance <strong>+20%</strong></li>
+        <li>🌿 Hunt rare chance <strong>×2</strong></li>
+        <li>👑 Crown displayed above all</li>
+        <li>👑 VIP 3 role in server</li>
+      </ul>
+      <button class="vip-btn vip3-btn" onclick="buyVip(3)">Get VIP 3</button>
+    </div>
+
+  </div>
+
+  <div id="vip-status-box" class="vip-status-box" style="display:none;"></div>
+
+  <div id="login-notice" class="login-notice" style="display:none;">
+    <p>You need to <a href="/login">login with Discord</a> to purchase VIP.</p>
+  </div>
+
+  <div id="buy-modal" class="buy-modal" style="display:none;">
+    <div class="buy-modal-inner">
+      <div id="buy-modal-icon" class="buy-modal-icon"></div>
+      <h2 id="buy-modal-title"></h2>
+      <p id="buy-modal-desc"></p>
+      <div class="buy-modal-btns">
+        <button class="buy-confirm-btn" id="buy-confirm-btn">Confirm Purchase</button>
+        <button class="buy-cancel-btn" onclick="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+  <div id="buy-overlay" class="buy-overlay" style="display:none;" onclick="closeModal()"></div>
+
+  <div class="premium-compare">
+    <h2>Compare Plans</h2>
+    <div class="compare-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Perk</th>
+            <th>Free</th>
+            <th>⭐ VIP 1</th>
+            <th>💎 VIP 2</th>
+            <th>👑 VIP 3</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Daily Reward</td>
+            <td>×1</td>
+            <td>×1.5</td>
+            <td>×2</td>
+            <td>×2.5</td>
+          </tr>
+          <tr>
+            <td>Gambling Win Chance</td>
+            <td>Base</td>
+            <td>+20%</td>
+            <td>+20%</td>
+            <td>+20%</td>
+          </tr>
+          <tr>
+            <td>Hunt Rare Chance</td>
+            <td>Base</td>
+            <td>+20%</td>
+            <td>+50%</td>
+            <td>×2</td>
+          </tr>
+          <tr>
+            <td>Crown Display</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
+            <td>👑</td>
+          </tr>
+          <tr>
+            <td>Server Role</td>
+            <td>—</td>
+            <td>⭐</td>
+            <td>💎</td>
+            <td>👑</td>
+          </tr>
+          <tr>
+            <td>Monthly Cost</td>
+            <td>Free</td>
+            <td>5M coins</td>
+            <td>15M coins</td>
+            <td>30M coins</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <img src="/avatar.png" alt="WoW" class="footer-avatar" />
+    <p>WoW Bot — Economy Discord Bot</p>
+    <p><a href="https://discord.gg/MYQGvfau4G" target="_blank">Support Server</a> · <a href="/commands">Commands</a></p>
+  </div>
+</footer>
+
+<script src="/js/config.js"></script>
+<script src="/js/nav.js"></script>
+<script>
+let loggedIn = false;
+let currentUser = null;
+let pendingTier = null;
+
+const TIER_INFO = {
+  1: { name: 'VIP 1', emoji: '⭐', price: '5,000,000' },
+  2: { name: 'VIP 2', emoji: '💎', price: '15,000,000' },
+  3: { name: 'VIP 3', emoji: '👑', price: '30,000,000' }
+};
+
+async function initPage() {
+  const res = await fetch(`${BOT_API_URL}/auth/me`).catch(() => null);
+  const data = res ? await res.json() : null;
+
+  const navRight = document.getElementById('nav-right');
+  if (data?.loggedIn) {
+    loggedIn = true;
+    currentUser = data.user;
+    const avatarSrc = data.user.avatar || '/avatar.png';
+    navRight.innerHTML = `
+      <div class="nav-user-info">
+        <img src="${avatarSrc}" class="nav-user-avatar" />
+        <span class="nav-username">${data.user.username}</span>
+      </div>
+      <a href="/auth/logout" class="btn-logout">Logout</a>
+    `;
+
+    const vipRes = await fetch(`${BOT_API_URL}/api/vip/status`).catch(() => null);
+    const vipData = vipRes ? await vipRes.json() : null;
+    if (vipData?.vip) {
+      const tier = vipData.vip.tier;
+      const t = TIER_INFO[tier];
+      const expiry = new Date(vipData.vip.expiresAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+      const box = document.getElementById('vip-status-box');
+      box.style.display = 'block';
+      box.innerHTML = `<span class="vip-active-badge">${t.emoji} ${t.name} Active</span> — Expires on <strong>${expiry}</strong>`;
+    }
+  } else {
+    navRight.innerHTML = `<a href="/login" class="btn-login">Login</a>`;
+    document.getElementById('login-notice').style.display = 'block';
+  }
+
+  const links = document.querySelectorAll('.nav-links a[data-page]');
+  links.forEach(l => {
+    if (l.dataset.page === 'premium') l.classList.add('active');
+  });
+}
+
+function buyVip(tier) {
+  if (!loggedIn) {
+    window.location.href = '/login';
+    return;
+  }
+  pendingTier = tier;
+  const t = TIER_INFO[tier];
+  document.getElementById('buy-modal-icon').textContent = t.emoji;
+  document.getElementById('buy-modal-title').textContent = `Purchase ${t.name}`;
+  document.getElementById('buy-modal-desc').textContent = `${t.price} coins will be deducted from your balance. Your VIP will be active for 30 days.`;
+  document.getElementById('buy-confirm-btn').onclick = confirmPurchase;
+  document.getElementById('buy-modal').style.display = 'flex';
+  document.getElementById('buy-overlay').style.display = 'block';
+}
+
+function closeModal() {
+  document.getElementById('buy-modal').style.display = 'none';
+  document.getElementById('buy-overlay').style.display = 'none';
+  pendingTier = null;
+}
+
+async function confirmPurchase() {
+  if (!pendingTier) return;
+  const btn = document.getElementById('buy-confirm-btn');
+  btn.disabled = true;
+  btn.textContent = 'Processing...';
+
+  try {
+    const res = await fetch(`${BOT_API_URL}/api/premium/buy`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ tier: pendingTier })
+    });
+    const data = await res.json();
+    closeModal();
+    if (data.ok) {
+      showToast('✅ ' + data.message, 'success');
+      setTimeout(() => location.reload(), 2000);
+    } else {
+      showToast('❌ ' + (data.error || 'Purchase failed.'), 'error');
+    }
+  } catch {
+    closeModal();
+    showToast('❌ Something went wrong. Please try again.', 'error');
+  }
+  btn.disabled = false;
+  btn.textContent = 'Confirm Purchase';
+}
+
+function showToast(msg, type) {
+  const t = document.createElement('div');
+  t.className = `toast toast-${type}`;
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 4000);
+}
+
+initPage();
+
+</script>
+</body>
+</html>

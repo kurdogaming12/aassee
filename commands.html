@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WoW Bot — Commands</title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+    <a href="/" class="nav-logo">
+      <img src="/avatar.png" class="nav-avatar-sm" alt="WoW" />
+      <span>WoW</span>
+    </a>
+    <div class="nav-right" id="nav-right"></div>
+    <div class="nav-links" id="nav-links">
+      <a href="/" data-page="home">🏠 Home</a>
+      <a href="/top" data-page="top">🏆 Top</a>
+      <a href="/report" data-page="report">📋 Report</a>
+      <a href="/dashboard" data-page="dashboard">👤 Dashboard</a>
+    </div>
+  </div>
+</nav>
+
+<div class="page">
+  <div class="page-header">
+    <h1>⌨️ Commands</h1>
+    <p>All available WoW Bot commands — prefix: <code style="background:rgba(45,138,62,0.25);color:#4ade80;padding:2px 8px;border-radius:5px;">wow</code></p>
+  </div>
+
+  <div class="commands-wrap">
+    <div class="cmd-tabs">
+      <button class="tab active" data-tab="economy">💰 Economy</button>
+      <button class="tab" data-tab="gambling">🎰 Gambling</button>
+      <button class="tab" data-tab="hunt">🦁 Hunt</button>
+    </div>
+
+    <div class="cmd-list active" id="tab-economy">
+      <div class="cmd"><code>wowcash</code> – View your balance</div>
+      <div class="cmd"><code>wowdaily</code> – Claim daily reward + streak bonus</div>
+      <div class="cmd"><code>wowsend @user &lt;amount&gt;</code> – Send coins to another user</div>
+      <div class="cmd"><code>wowlevel</code> – View your XP &amp; current level</div>
+      <div class="cmd"><code>wowtop</code> – View the server leaderboard</div>
+      <div class="cmd"><code>wowprofile</code> – View your full profile</div>
+      <div class="cmd"><code>wowinventory</code> – View your inventory</div>
+      <div class="cmd"><code>wowlootbox</code> – Open a lootbox for gems &amp; rewards</div>
+    </div>
+
+    <div class="cmd-list" id="tab-gambling">
+      <div class="cmd"><code>wowslots &lt;amount&gt;</code> – Spin the slot machine</div>
+      <div class="cmd"><code>wowblackjack &lt;amount&gt;</code> – Play a hand of blackjack</div>
+      <div class="cmd"><code>wowcoinflip &lt;amount&gt;</code> – Flip a coin for double or nothing</div>
+    </div>
+
+    <div class="cmd-list" id="tab-hunt">
+      <div class="cmd"><code>wowhunt</code> – Hunt animals and earn XP</div>
+      <div class="cmd"><code>wowzoo</code> – View your zoo collection</div>
+      <div class="cmd"><code>wowsell</code> – Sell animals from your zoo</div>
+      <div class="cmd"><code>wowuse &lt;gem&gt;</code> – Activate a gem power-up</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <img src="/avatar.png" class="footer-avatar" alt="WoW" />
+    <p>WoW Bot &copy; 2025 — Prefix: <code>wow</code></p>
+  </div>
+</footer>
+
+<script src="/js/config.js"></script>
+<script src="/js/nav.js"></script>
+<script>
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.cmd-list').forEach(l => l.classList.remove('active'));
+    tab.classList.add('active');
+    const el = document.getElementById('tab-' + tab.dataset.tab);
+    if (el) el.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
