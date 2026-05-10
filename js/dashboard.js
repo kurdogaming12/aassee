@@ -20,7 +20,7 @@ function showLoginPrompt() {
       </a>
     </div>`;
   const btn = document.getElementById('dash-login-btn');
-  if (btn) btn.href = `${BOT_API_URL}/auth/discord`;
+  if (btn) btn.href = DISCORD_LOGIN_URL;
 }
 
 document.addEventListener('navReady', async (e) => {

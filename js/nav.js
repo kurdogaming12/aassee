@@ -56,7 +56,7 @@ async function initNav() {
         </div>
         <a href="${escHtml(BOT_API_URL)}/auth/logout" class="btn-logout">Logout</a>`;
     } else {
-      html += `<a href="/login" class="btn-login">Login</a>`;
+      html += `<a href="${DISCORD_LOGIN_URL}" class="btn-login">Login</a>`;
     }
 
     html += `<a href="/premium" class="nav-premium-btn">✨ Premium</a>`;
@@ -90,7 +90,7 @@ async function initNav() {
       if (data.loggedIn) {
         if (isOwner) extras.push({ href: '/owner', label: '👑 Owner Panel' });
         extras.push({ href: '/dashboard', label: '👤 Dashboard' });
-        extras.push({ href: `${BOT_API_URL}/auth/logout`, label: '🚪 Logout' });
+        extras.push({ href: `/auth/logout`, label: '🚪 Logout' });
       } else {
         extras.push({ href: '/login', label: '🔑 Login with Discord' });
       }

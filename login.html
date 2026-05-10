@@ -53,7 +53,7 @@
 <script src="/js/config.js"></script>
 <script src="/js/nav.js"></script>
 <script>
-document.getElementById('login-btn').href = `${BOT_API_URL}/auth/discord`;
+document.getElementById('login-btn').href = DISCORD_LOGIN_URL;
 document.addEventListener('navReady', e => {
   if (e.detail.loggedIn) window.location.href = '/dashboard';
 });
