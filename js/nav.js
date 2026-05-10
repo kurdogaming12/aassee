@@ -29,7 +29,7 @@ function escHtml(s) {
 // Auth check + populate nav-right
 async function initNav() {
   try {
-    const res = await fetch(`${BOT_API_URL}/auth/me`, { credentials: 'include', signal: AbortSignal.timeout(3000) });
+    const res = await authFetch(`${BOT_API_URL}/auth/me`, { signal: AbortSignal.timeout(3000) });
     const data = await res.json();
     const rightEl = document.getElementById('nav-right');
     if (!rightEl) return;
@@ -37,7 +37,7 @@ async function initNav() {
     let isOwner = false;
     if (data.loggedIn) {
       try {
-        const ownerRes = await fetch(`${BOT_API_URL}/api/owner/check`, { credentials: 'include', signal: AbortSignal.timeout(3000) });
+        const ownerRes = await authFetch(`${BOT_API_URL}/api/owner/check`, { signal: AbortSignal.timeout(3000) });
         const ownerData = await ownerRes.json();
         isOwner = ownerData.isOwner;
       } catch {}
@@ -54,7 +54,7 @@ async function initNav() {
           <img class="nav-user-avatar" src="${escHtml(data.user.avatar)}" alt="" />
           <a href="/dashboard" class="nav-username">${escHtml(data.user.username)}</a>
         </div>
-        <a href="${escHtml(BOT_API_URL)}/auth/logout" class="btn-logout">Logout</a>`;
+        <a href="#" class="btn-logout" onclick="doLogout();return false;">Logout</a>`;
     } else {
       html += `<a href="${DISCORD_LOGIN_URL}" class="btn-login">Login</a>`;
     }
@@ -90,7 +90,7 @@ async function initNav() {
       if (data.loggedIn) {
         if (isOwner) extras.push({ href: '/owner', label: '👑 Owner Panel' });
         extras.push({ href: '/dashboard', label: '👤 Dashboard' });
-        extras.push({ href: `/auth/logout`, label: '🚪 Logout' });
+        extras.push({ href: '#', label: '🚪 Logout', onclick: 'doLogout()' });
       } else {
         extras.push({ href: '/login', label: '🔑 Login with Discord' });
       }
@@ -103,6 +103,7 @@ async function initNav() {
         a.textContent = item.label;
         a.className = 'nav-mobile-extra';
         if (item.external) { a.target = '_blank'; a.rel = 'noopener'; }
+        if (item.onclick) a.setAttribute('onclick', item.onclick + ';return false;');
         navLinks.appendChild(a);
       });
     }
@@ -126,6 +127,12 @@ async function initNav() {
   } catch {
     document.dispatchEvent(new CustomEvent('navReady', { detail: { loggedIn: false } }));
   }
+}
+
+async function doLogout() {
+  await authFetch('/auth/logout').catch(() => {});
+  localStorage.removeItem('wow_auth_token');
+  window.location.href = '/';
 }
 
 initNav();

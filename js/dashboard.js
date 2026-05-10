@@ -30,7 +30,7 @@ document.addEventListener('navReady', async (e) => {
 });
 
 async function renderDash(user) {
-  const profileRes = await fetch(`${BOT_API_URL}/api/profile/${user.id}`, { credentials: 'include' }).catch(() => null);
+  const profileRes = await authFetch(`${BOT_API_URL}/api/profile/${user.id}`).catch(() => null);
   const profile = profileRes ? await profileRes.json() : null;
 
   const xp = profile?.xp ?? 0;
