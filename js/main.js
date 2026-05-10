@@ -1,7 +1,4 @@
 // ── Stats laden ────────────────────────────────────────────────
-// Leer lassen für Replit-Test (gleicher Server)
-// Für Netlify: 'https://DEINE-BOT-HOSTING-URL.com' eintragen
-const BOT_API_URL = '';
 
 async function loadStats() {
   try {
@@ -90,7 +87,7 @@ document.querySelectorAll('.tab').forEach(tab => {
 // ── Auth State ─────────────────────────────────────────────────
 async function checkAuth() {
   try {
-    const res = await fetch('/auth/me', { signal: AbortSignal.timeout(3000) });
+    const res = await authFetch(`${BOT_API_URL}/auth/me`, { signal: AbortSignal.timeout(3000) });
     const data = await res.json();
     if (data.loggedIn) {
       document.getElementById('nav-user').style.display = 'flex';
