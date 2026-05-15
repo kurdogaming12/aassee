@@ -1,6 +1,18 @@
 [build]
   publish = "."
 
+# Route /auth/callback to the static callback page
+[[redirects]]
+  from = "/auth/callback"
+  to   = "/auth/callback.html"
+  status = 200
+
+# SPA-style fallback – serve index.html for unknown paths
+[[redirects]]
+  from = "/*"
+  to   = "/index.html"
+  status = 200
+
 [[headers]]
   for = "/*"
   [headers.values]
